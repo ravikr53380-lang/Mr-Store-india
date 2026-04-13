@@ -3,62 +3,22 @@
 <head>
   <title>MR STORE INDIA</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f5f5f5;
-    }
-    header {
-      background: black;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .banner {
-      background: linear-gradient(to right, #000, #444);
-      color: white;
-      padding: 40px;
-      text-align: center;
-    }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .card img {
-      width: 100%;
-      border-radius: 10px;
-    }
-    .card h3 {
-      margin: 10px 0 5px;
-    }
-    .price {
-      color: green;
-      font-weight: bold;
-    }
-    button {
-      margin-top: 10px;
-      padding: 10px;
-      background: black;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #333;
-    }
+    body {font-family:'Poppins',sans-serif;margin:0;background:#f4f6f9;}
+    header {background:#000;color:#fff;padding:15px;text-align:center;font-size:24px;}
+    .banner {background:linear-gradient(to right,#000,#555);color:#fff;padding:40px;text-align:center;}
+    .search {text-align:center;margin:15px;}
+    .search input {padding:10px;width:80%;max-width:400px;border-radius:8px;border:1px solid #ccc;}
+    .categories {display:flex;justify-content:center;gap:10px;padding:10px;flex-wrap:wrap;}
+    .categories button {padding:8px 15px;border:none;border-radius:20px;background:#fff;cursor:pointer;}
+    .products {display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px;}
+    .card {background:#fff;border-radius:15px;padding:15px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+    .card img {width:100%;border-radius:10px;}
+    .price {color:green;font-weight:bold;}
+    button.add {background:#000;color:#fff;padding:10px;border:none;border-radius:8px;width:100%;cursor:pointer;}
+    .cart {position:fixed;top:10px;right:10px;background:#fff;padding:10px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.2);}
+    .checkout {margin:20px;text-align:center;}
   </style>
 </head>
 <body>
@@ -67,47 +27,80 @@
 
 <div class="banner">
   <h1>Welcome to MR STORE INDIA</h1>
-  <p>Best Fashion Deals for Men</p>
+  <p>Shop for Men • Women • Kids</p>
 </div>
 
-<div class="products">
-
-  <div class="card">
-    <img src="https://via.placeholder.com/200">
-    <h3>Shirt</h3>
-    <p class="price">₹499</p>
-    <button>Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="https://via.placeholder.com/200">
-    <h3>T-Shirt</h3>
-    <p class="price">₹299</p>
-    <button>Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="https://via.placeholder.com/200">
-    <h3>Jeans</h3>
-    <p class="price">₹999</p>
-    <button>Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="https://via.placeholder.com/200">
-    <h3>Plaza</h3>
-    <p class="price">₹699</p>
-    <button>Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="https://via.placeholder.com/200">
-    <h3>Lower</h3>
-    <p class="price">₹399</p>
-    <button>Add to Cart</button>
-  </div>
-
+<div class="search">
+  <input type="text" id="search" placeholder="Search products..." onkeyup="searchProduct()">
 </div>
+
+<div class="categories">
+  <button onclick="filter('all')">All</button>
+  <button onclick="filter('men')">Men</button>
+  <button onclick="filter('women')">Women</button>
+</div>
+
+<div class="products" id="productList"></div>
+
+<div class="cart">
+  🛒 Cart: <span id="cartCount">0</span>
+</div>
+
+<div class="checkout">
+  <h3>Checkout</h3>
+  <input placeholder="Name" id="name"><br><br>
+  <input placeholder="Address" id="address"><br><br>
+  <button onclick="pay()">Pay via UPI</button>
+</div>
+
+<script>
+let products=[
+ {name:'Shirt',price:499,cat:'men'},
+ {name:'T-Shirt',price:299,cat:'men'},
+ {name:'Jeans',price:999,cat:'men'},
+ {name:'Plaza',price:699,cat:'women'},
+ {name:'Lower',price:399,cat:'women'}
+];
+
+let cart=0;
+
+function display(list){
+ let html='';
+ list.forEach(p=>{
+  html+=`<div class='card'>
+   <img src='https://via.placeholder.com/200'>
+   <h3>${p.name}</h3>
+   <p class='price'>₹${p.price}</p>
+   <button class='add' onclick='add()'>Add to Cart</button>
+  </div>`;
+ });
+ document.getElementById('productList').innerHTML=html;
+}
+
+function add(){
+ cart++;
+ document.getElementById('cartCount').innerText=cart;
+}
+
+function searchProduct(){
+ let val=document.getElementById('search').value.toLowerCase();
+ let filtered=products.filter(p=>p.name.toLowerCase().includes(val));
+ display(filtered);
+}
+
+function filter(cat){
+ if(cat==='all') display(products);
+ else display(products.filter(p=>p.cat===cat));
+}
+
+function pay(){
+ let name=document.getElementById('name').value;
+ if(!name){alert('Enter details');return;}
+ alert('Redirecting to UPI Payment (Demo)');
+}
+
+display(products);
+</script>
 
 </body>
 </html>
