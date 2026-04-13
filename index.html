@@ -8,11 +8,15 @@
     body {font-family:'Poppins',sans-serif;margin:0;background:#f4f6f9;}
     header {background:#000;color:#fff;padding:15px;text-align:center;font-size:24px;}
     .banner {background:linear-gradient(to right,#000,#666);color:#fff;padding:40px;text-align:center;}
+    .search {text-align:center;margin:15px;}
+    .search input {padding:10px;width:80%;max-width:400px;border-radius:8px;border:1px solid #ccc;}
     .products {display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px;}
     .card {background:#fff;border-radius:15px;padding:15px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
     .card img {width:100%;border-radius:10px;}
     .price {color:green;font-weight:bold;}
-    button {background:#000;color:#fff;padding:10px;border:none;border-radius:8px;width:100%;cursor:pointer;margin-top:10px;}
+    .old {text-decoration:line-through;color:#999;font-size:14px;}
+    button {background:#000;color:#fff;padding:10px;border:none;border-radius:8px;width:100%;cursor:pointer;margin-top:5px;}
+    .cart {position:fixed;top:10px;right:10px;background:#fff;padding:10px;border-radius:10px;}
     .form-box {display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);justify-content:center;align-items:center;}
     .form {background:#fff;padding:20px;border-radius:10px;width:90%;max-width:400px;}
     input {width:100%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ccc;}
@@ -23,27 +27,17 @@
 <header>MR STORE INDIA</header>
 
 <div class="banner">
-  <h1>Buy Premium Shirts Online</h1>
-  <p>Cash on Delivery Available 🚚</p>
+  <h1>Premium Shirt Collection</h1>
+  <p>Discount Deals • Cash on Delivery 🚚</p>
 </div>
 
-<div class="products">
-
-  <div class="card">
-    <img src="https://via.placeholder.com/200">
-    <h3>Premium Cotton Shirt</h3>
-    <p class="price">₹499</p>
-    <button onclick="openForm('Premium Cotton Shirt')">Buy Now</button>
-  </div>
-
-  <div class="card">
-    <img src="https://via.placeholder.com/200">
-    <h3>Stylish Shirt Combo</h3>
-    <p class="price">₹899</p>
-    <button onclick="openForm('Stylish Shirt Combo')">Buy Now</button>
-  </div>
-
+<div class="search">
+  <input type="text" id="search" placeholder="Search products..." onkeyup="searchProduct()">
 </div>
+
+<div class="cart">🛒 Cart: <span id="cartCount">0</span></div>
+
+<div class="products" id="productList"></div>
 
 <div class="form-box" id="formBox">
   <div class="form">
@@ -57,6 +51,39 @@
 </div>
 
 <script>
+let products=[
+ {name:'Premium Shirt',price:499,old:799},
+ {name:'Stylish Shirt',price:399,old:699},
+ {name:'Combo Shirt Pack',price:899,old:1299}
+];
+
+let cart=0;
+
+function display(list){
+ let html='';
+ list.forEach((p,i)=>{
+  html+=`<div class='card'>
+   <img src='https://via.placeholder.com/200'>
+   <h3>${p.name}</h3>
+   <p class='price'>₹${p.price} <span class='old'>₹${p.old}</span></p>
+   <button onclick='add()'>Add to Cart</button>
+   <button onclick="openForm('${p.name}')">Buy Now</button>
+  </div>`;
+ });
+ document.getElementById('productList').innerHTML=html;
+}
+
+function add(){
+ cart++;
+ document.getElementById('cartCount').innerText=cart;
+}
+
+function searchProduct(){
+ let val=document.getElementById('search').value.toLowerCase();
+ let filtered=products.filter(p=>p.name.toLowerCase().includes(val));
+ display(filtered);
+}
+
 function openForm(product){
  document.getElementById('formBox').style.display='flex';
  document.getElementById('product').value=product;
@@ -70,9 +97,14 @@ function submitOrder(){
 
  if(!name || !phone || !address){alert('Please fill all details');return;}
 
- alert('Order Placed Successfully!\nProduct: '+product+'\nName: '+name);
+ let orderData=`Order: ${product}\nName: ${name}\nPhone: ${phone}\nAddress: ${address}`;
+ console.log(orderData);
+
+ alert('Order Placed Successfully!');
  document.getElementById('formBox').style.display='none';
 }
+
+display(products);
 </script>
 
 </body>
