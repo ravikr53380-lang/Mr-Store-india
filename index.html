@@ -12,8 +12,10 @@
     .card {background:#fff;border-radius:15px;padding:15px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
     .card img {width:100%;border-radius:10px;}
     .price {color:green;font-weight:bold;}
-    button {background:#25D366;color:#fff;padding:10px;border:none;border-radius:8px;width:100%;cursor:pointer;margin-top:10px;}
-    footer {background:#000;color:#fff;text-align:center;padding:15px;margin-top:20px;}
+    button {background:#000;color:#fff;padding:10px;border:none;border-radius:8px;width:100%;cursor:pointer;margin-top:10px;}
+    .form-box {display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);justify-content:center;align-items:center;}
+    .form {background:#fff;padding:20px;border-radius:10px;width:90%;max-width:400px;}
+    input {width:100%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ccc;}
   </style>
 </head>
 <body>
@@ -21,8 +23,8 @@
 <header>MR STORE INDIA</header>
 
 <div class="banner">
-  <h1>Order Premium Shirts Online</h1>
-  <p>Cash on Delivery Available 🚚 | WhatsApp Order</p>
+  <h1>Buy Premium Shirts Online</h1>
+  <p>Cash on Delivery Available 🚚</p>
 </div>
 
 <div class="products">
@@ -31,27 +33,47 @@
     <img src="https://via.placeholder.com/200">
     <h3>Premium Cotton Shirt</h3>
     <p class="price">₹499</p>
-    <a href="https://wa.me/918168519479?text=Hi%20I%20want%20to%20order%20Premium%20Shirt%20₹499" target="_blank">
-      <button>Order on WhatsApp</button>
-    </a>
+    <button onclick="openForm('Premium Cotton Shirt')">Buy Now</button>
   </div>
 
   <div class="card">
     <img src="https://via.placeholder.com/200">
     <h3>Stylish Shirt Combo</h3>
     <p class="price">₹899</p>
-    <a href="https://wa.me/918168519479?text=Hi%20I%20want%20to%20order%20Shirt%20Combo%20₹899" target="_blank">
-      <button>Order on WhatsApp</button>
-    </a>
+    <button onclick="openForm('Stylish Shirt Combo')">Buy Now</button>
   </div>
 
 </div>
 
-<footer>
-  <p>📞 WhatsApp: 8168519479</p>
-  <p>🚚 Delivery: 3-7 Days | Cash on Delivery</p>
-  <p>© 2026 MR STORE INDIA</p>
-</footer>
+<div class="form-box" id="formBox">
+  <div class="form">
+    <h3>Enter Details</h3>
+    <input type="text" id="product" readonly>
+    <input type="text" placeholder="Full Name" id="name">
+    <input type="text" placeholder="Mobile Number" id="phone">
+    <input type="text" placeholder="Address" id="address">
+    <button onclick="submitOrder()">Place Order</button>
+  </div>
+</div>
+
+<script>
+function openForm(product){
+ document.getElementById('formBox').style.display='flex';
+ document.getElementById('product').value=product;
+}
+
+function submitOrder(){
+ let name=document.getElementById('name').value;
+ let phone=document.getElementById('phone').value;
+ let address=document.getElementById('address').value;
+ let product=document.getElementById('product').value;
+
+ if(!name || !phone || !address){alert('Please fill all details');return;}
+
+ alert('Order Placed Successfully!\nProduct: '+product+'\nName: '+name);
+ document.getElementById('formBox').style.display='none';
+}
+</script>
 
 </body>
 </html>
