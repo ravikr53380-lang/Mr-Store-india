@@ -2,21 +2,112 @@
 <html>
 <head>
   <title>MR STORE INDIA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f5f5;
+    }
+    header {
+      background: black;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .banner {
+      background: linear-gradient(to right, #000, #444);
+      color: white;
+      padding: 40px;
+      text-align: center;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .card h3 {
+      margin: 10px 0 5px;
+    }
+    .price {
+      color: green;
+      font-weight: bold;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #333;
+    }
+  </style>
 </head>
-<body style="font-family: Arial; text-align:center;">
+<body>
 
-  <h1>MR STORE INDIA</h1>
-  <p>Welcome to our store</p>
+<header>MR STORE INDIA</header>
 
-  <h2>Products</h2>
+<div class="banner">
+  <h1>Welcome to MR STORE INDIA</h1>
+  <p>Best Fashion Deals for Men</p>
+</div>
 
-  <div>
-    <p>Shirt - ₹499</p>
-    <p>T-Shirt - ₹299</p>
-    <p>Jeans - ₹999</p>
-    <p>Plaza - ₹699</p>
-    <p>Lower - ₹399</p>
+<div class="products">
+
+  <div class="card">
+    <img src="https://via.placeholder.com/200">
+    <h3>Shirt</h3>
+    <p class="price">₹499</p>
+    <button>Add to Cart</button>
   </div>
+
+  <div class="card">
+    <img src="https://via.placeholder.com/200">
+    <h3>T-Shirt</h3>
+    <p class="price">₹299</p>
+    <button>Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="https://via.placeholder.com/200">
+    <h3>Jeans</h3>
+    <p class="price">₹999</p>
+    <button>Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="https://via.placeholder.com/200">
+    <h3>Plaza</h3>
+    <p class="price">₹699</p>
+    <button>Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="https://via.placeholder.com/200">
+    <h3>Lower</h3>
+    <p class="price">₹399</p>
+    <button>Add to Cart</button>
+  </div>
+
+</div>
 
 </body>
 </html>
