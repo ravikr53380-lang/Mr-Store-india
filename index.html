@@ -8,6 +8,8 @@
     body {font-family:'Poppins',sans-serif;margin:0;background:#f4f6f9;}
     header {background:#000;color:#fff;padding:15px;text-align:center;font-size:24px;}
     .banner {background:linear-gradient(to right,#000,#666);color:#fff;padding:40px;text-align:center;}
+    .banner h1{margin:0}
+    .banner p{margin-top:10px}
     .search {text-align:center;margin:15px;}
     .search input {padding:10px;width:80%;max-width:400px;border-radius:8px;border:1px solid #ccc;}
     .products {display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px;}
@@ -15,9 +17,11 @@
     .card:hover {transform:scale(1.05);}
     .card img {width:100%;border-radius:10px;}
     .price {color:green;font-weight:bold;}
+    .old {text-decoration:line-through;color:#888;font-size:14px;}
     button {background:#000;color:#fff;padding:10px;border:none;border-radius:8px;width:100%;cursor:pointer;margin-top:5px;}
-    .cart {position:fixed;top:10px;right:10px;background:#fff;padding:10px;border-radius:10px;}
+    .cart {position:fixed;top:10px;right:10px;background:#fff;padding:10px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.2);}
     .checkout {padding:20px;background:#fff;margin:20px;border-radius:10px;}
+    footer {background:#000;color:#fff;text-align:center;padding:15px;margin-top:20px;}
   </style>
 </head>
 <body>
@@ -25,8 +29,8 @@
 <header>MR STORE INDIA</header>
 
 <div class="banner">
-  <h1>Premium Fashion Store</h1>
-  <p>Trendy Collection for Everyone</p>
+  <h1>India's Trending Fashion Store</h1>
+  <p>Affordable • Stylish • Trusted | Cash on Delivery Available</p>
 </div>
 
 <div class="search">
@@ -38,20 +42,28 @@
 <div class="cart">🛒 Cart: <span id="cartCount">0</span></div>
 
 <div class="checkout">
-  <h3>Order Details</h3>
+  <h3>Place Your Order</h3>
   <input placeholder="Full Name" id="name"><br><br>
   <input placeholder="Mobile Number" id="phone"><br><br>
-  <input placeholder="Address" id="address"><br><br>
-  <button onclick="placeOrder()">Place Order</button>
+  <input placeholder="Full Address" id="address"><br><br>
+  <button onclick="placeOrder()">Order Now (Cash on Delivery)</button>
 </div>
+
+<footer>
+  <p>📞 Support: 9876543210</p>
+  <p>📧 Email: support@mrstoreindia.com</p>
+  <p>🚚 Delivery: 3-7 Days All India</p>
+  <p>🔁 Easy Returns Available</p>
+  <p>© 2026 MR STORE INDIA</p>
+</footer>
 
 <script>
 let products=[
- {name:'Shirt',price:499},
- {name:'T-Shirt',price:299},
- {name:'Jeans',price:999},
- {name:'Plaza',price:699},
- {name:'Lower',price:399}
+ {name:'Premium Shirt',price:499,old:799},
+ {name:'Stylish T-Shirt',price:299,old:499},
+ {name:'Denim Jeans',price:999,old:1499},
+ {name:'Women Plaza',price:699,old:999},
+ {name:'Comfort Lower',price:399,old:699}
 ];
 
 let cartItems=[];
@@ -62,7 +74,7 @@ function display(list){
   html+=`<div class='card'>
    <img src='https://via.placeholder.com/200'>
    <h3>${p.name}</h3>
-   <p class='price'>₹${p.price}</p>
+   <p class='price'>₹${p.price} <span class='old'>₹${p.old}</span></p>
    <button onclick='add(${i})'>Add to Cart</button>
   </div>`;
  });
@@ -83,8 +95,9 @@ function searchProduct(){
 function placeOrder(){
  let name=document.getElementById('name').value;
  let phone=document.getElementById('phone').value;
- if(!name || !phone){alert('Fill all details');return;}
- alert('Order Placed Successfully! (Demo)');
+ let address=document.getElementById('address').value;
+ if(!name || !phone || !address){alert('Please fill all details');return;}
+ alert('Order Placed Successfully! Our team will contact you soon.');
 }
 
 display(products);
